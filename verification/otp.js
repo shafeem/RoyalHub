@@ -1,5 +1,5 @@
-const sid = process.env.TWILIO_ACCOUNT_SID;
-const token = process.env.TWILIO_AUTH_TOKEN;
+const sid = process.env.SID;
+const token = process.env.TOKEN;
 const ssid = process.env.SSID;
 
 const client = require("twilio")(sid, token);
