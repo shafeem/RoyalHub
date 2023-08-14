@@ -1,0 +1,310 @@
+<!-- signup Form -->
+<!-- <% if (errs) { %>
+        <h6 class="text-danger mt-3"><%= errs %></h6>
+        <% } %>
+        <form action="/signup" method="post">
+          <input
+            type="text"
+            id="login"
+            class="fadeIn second mt-5"
+            name="name"
+            placeholder="Name"
+            required
+          />
+          <input
+            type="text"
+            id="login"
+            class="fadeIn second"
+            name="email"
+            placeholder="Email"
+            required
+          /> -->
+<!-- <input
+            type="number"
+            class="fadeIn third"
+            name="phone"
+            placeholder="Mobile Number"
+            required
+          /> -->
+<!-- <input
+            type="number"
+            class="fadeIn third"
+            name="number"
+            placeholder="Number"
+            required
+          />
+          <input
+            type="password"
+            id="password"
+            class="fadeIn third"
+            name="password"
+            placeholder="Password"
+            required
+          />
+          <input type="submit" class="fadeIn fourth mt-4 b" value="Signup" />
+        </form> -->
+<!-- Remind Passowrd -->
+<!-- <div id="formFooter">
+          <a class="underlineHover pr-2" href="#">Forgot Password?</a>
+          <a class="underlineHover pr-2" href="/login">Log in?</a>-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>RegistrationForm</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- MATERIAL DESIGN ICONIC FONT -->
+    <link
+      rel="stylesheet"
+      href="/signup/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <!-- STYLE CSS -->
+    <link rel="stylesheet" href="/signup/css/style.css" />
+  </head>
+
+  <body>
+    <div
+      class="wrapper"
+      style="background-image: url('/signup/images/bg-registration-form-1.jpg')"
+    >
+      <div class="inner">
+        <div class="image-holder">
+          <img src="/signup/images/registration-form-1.jpg" alt="" />
+        </div>
+
+        <div id="error"></div>
+
+        <form action="/signup" method="post" id="signupForm">
+          <h3>Registration Form</h3>
+
+          <div class="form-wrapper">
+            <input
+              type="text"
+              placeholder="Username"
+              class="form-control"
+              name="name"
+              id="fullname"
+              required
+            />
+            <p id="usercheck" style="color: red">**Username is missing</p>
+            <i class="zmdi zmdi-account"></i>
+          </div>
+
+          <div class="form-wrapper">
+            <input
+              type="text"
+              placeholder="Email Address"
+              class="form-control"
+              name="email"
+              id="email"
+              required
+              pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}"
+            />
+            <% if (errs) { %>
+            <small
+              id="emailvalid"
+              class="form-text text-muted invalid-feedback"
+            >
+              <%= errs %>
+            </small>
+            <% } else { %>
+            <small
+              id="emailvalid"
+              class="form-text text-muted invalid-feedback"
+            >
+              Your email must be a valid email
+            </small>
+            <% } %>
+
+            <i class="zmdi zmdi-email"></i>
+          </div>
+
+          <div class="form-wrapper">
+            <input
+              type="text"
+              placeholder="Phone Number"
+              class="form-control"
+              name="phone"
+              id="mobilenumber"
+              required
+            />
+            <i class="zmdi zmdi-account"></i>
+          </div>
+
+          <div class="form-wrapper">
+            <input
+              type="password"
+              placeholder="Password"
+              class="form-control"
+              name="password"
+              id="password"
+              required
+            />
+            <p id="passcheck" style="color: red">**Please Fill the password</p>
+            <i class="zmdi zmdi-lock"></i>
+          </div>
+
+          <div class="form-wrapper">
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              class="form-control"
+              name="confirmpassword"
+              id="confirmpassword"
+              required
+            />
+            <p id="conpasscheck" style="color: red">**Password didn't match</p>
+            <i class="zmdi zmdi-lock"></i>
+          </div>
+
+          <button id="submitbtn">
+            Register
+            <i class="zmdi zmdi-arrow-right"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script
+  src="https://code.jquery.com/jquery-3.6.3.js"
+  integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+  crossorigin="anonymous"
+></script>
+
+<script>
+  $(document).ready(function () {
+    // Validate Username
+    $("#usercheck").hide();
+    let usernameError = true;
+    $("#fullname").keyup(function () {
+      validateUsername();
+    });
+
+    function validateUsername() {
+      let usernameValue = $("#fullname").val();
+      if (usernameValue.length == "") {
+        $("#usercheck").show();
+        usernameError = false;
+        return false;
+      } else if (usernameValue.length < 3 || usernameValue.length > 10) {
+        $("#usercheck").show();
+        $("#usercheck").html("**length of username must be between 3 and 10");
+        usernameError = false;
+        return false;
+      } else {
+        $("#usercheck").hide();
+      }
+    }
+
+    //   Validate Email
+    async function validateEmail() {
+      const email = document.getElementById("email");
+      email.addEventListener("blur", () => {
+        let regex = /^([\-\.0-9a-zA-Z]+)@([\-\.0-9a-zA-Z]+)\.([a-zA-Z]){2,7}$/;
+        let s = email.value;
+        if (regex.test(s)) {
+          email.classList.remove("is-invalid");
+          emailError = true;
+        } else {
+          email.classList.add("is-invalid");
+          emailError = false;
+        }
+      });
+    }
+
+    // Validate Password
+    $("#passcheck").hide();
+    let passwordError = true;
+    $("#password").keyup(function () {
+      validatePassword();
+    });
+    async function validatePassword() {
+      let passwordValue = $("#password").val();
+      if (passwordValue.length == "") {
+        $("#passcheck").show();
+        passwordError = false;
+        return false;
+      }
+      if (passwordValue.length < 3 || passwordValue.length > 10) {
+        $("#passcheck").show();
+        $("#passcheck").html(
+          "**length of your password must be between 3 and 10"
+        );
+        $("#passcheck").css("color", "red");
+        passwordError = false;
+        return false;
+      }
+      let res = await containsSpecialChars(passwordValue);
+      console.log(res);
+      if (res === false) {
+        $("#passcheck").show();
+        $("#passcheck").html("Password must contain special characters");
+        $("#passcheck").css("color", "red");
+        passwordError = false;
+        return false;
+      } else {
+        $("#passcheck").hide();
+      }
+    }
+    function containsSpecialChars(str) {
+      const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+      return specialChars.test(str);
+    }
+    // Validate Confirm Password
+    $("#conpasscheck").hide();
+    let confirmPasswordError = true;
+    $("#confirmpassword").keyup(function () {
+      validateConfirmPassword();
+    });
+    function validateConfirmPassword() {
+      let confirmPasswordValue = $("#confirmpassword").val();
+      let passwordValue = $("#password").val();
+
+      if (passwordValue != confirmPasswordValue) {
+        $("#conpasscheck").show();
+        $("#conpasscheck").html("**Password didn't Match");
+        $("#conpasscheck").css("color", "red");
+        confirmPasswordError = false;
+        return false;
+      } else {
+        $("#conpasscheck").hide();
+      }
+    }
+
+    // Submit button
+    $("#submitbtn").click(function () {
+      validateUsername();
+      validatePassword();
+      validateConfirmPassword();
+      validateEmail();
+      if (
+        usernameError == true &&
+        passwordError == true &&
+        confirmPasswordError == true &&
+        emailError == true
+      ) {
+        $("#signupForm").submit(function (evt) {
+          evt.preventDefault();
+          window.history.back();
+        });
+        return true;
+      } else {
+        return false;
+      }
+    });
+  });
+</script>
