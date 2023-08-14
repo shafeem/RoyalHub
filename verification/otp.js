@@ -2,8 +2,7 @@ const sid = process.env.TWILIO_ACCOUNT_SID;
 const token = process.env.TWILIO_AUTH_TOKEN;
 const ssid = process.env.SSID;
 
-const twilio = require("twilio")
-const client = new twilio(sid, token);
+const client = require("twilio")(sid, token);
 
 const dotenv = require("dotenv");
 dotenv.config({ path: "./.env" });
