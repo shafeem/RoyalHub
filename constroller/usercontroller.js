@@ -18,11 +18,6 @@ require("dotenv").config();
 
 const { sendsms, verifysms } = require("../verification/otp");
 
-const twilio_sid = process.env.SID;
-const twilio_token = process.env.TOKEN;
-const twilio_serviceId = process.env.SSID;
-const client = require("twilio")(twilio_sid, twilio_token);
-
 const envirolment =
   process.env.NODE_ENV === "production"
     ? paypal.core.LiveEnvironment
